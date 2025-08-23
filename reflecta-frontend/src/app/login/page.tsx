@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { authApi, ApiError, AuthError } from '@/lib/api';
+import CosmicPanel from '@/components/CosmicPanel';
 
 export default function LoginPage() {
   const [identifier, setIdentifier] = useState('');
@@ -27,40 +28,49 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="max-w-sm">
-      <div className="relative overflow-hidden rounded-2xl border border-white/10 p-6 bg-black/30 backdrop-blur">
-        <div className="pointer-events-none absolute -top-20 -left-16 h-48 w-48 rounded-full bg-violet-600/30 blur-3xl" />
-        <h1 className="text-2xl font-semibold tracking-tight">Login</h1>
+    <div className="grid md:grid-cols-2 gap-6 items-stretch">
+      {/* LEFT: form card */}
+      <div className="max-w-md">
+        <div className="relative overflow-hidden rounded-2xl border border-white/10 p-6 bg-black/30 backdrop-blur">
+          <div className="pointer-events-none absolute -top-20 -left-16 h-48 w-48 rounded-full bg-violet-600/30 blur-3xl" />
+          <h1 className="text-2xl font-semibold tracking-tight">Welcome back</h1>
+          <p className="text-neutral-300 text-sm mt-1">Log in to continue your journey through memories.</p>
 
-        <form onSubmit={onSubmit} className="space-y-4 mt-4">
-          <div>
-            <label className="block text-sm mb-1">Username or Email</label>
-            <input
-              className="w-full rounded-xl border border-white/15 bg-black/40 px-3 py-2 outline-none focus:ring-2 focus:ring-violet-500/40"
-              value={identifier} onChange={(e) => setIdentifier(e.target.value)} autoComplete="username"
-            />
-          </div>
-          <div>
-            <label className="block text-sm mb-1">Password</label>
-            <input
-              className="w-full rounded-xl border border-white/15 bg-black/40 px-3 py-2 outline-none focus:ring-2 focus:ring-cyan-400/40"
-              type="password" value={password} onChange={(e) => setPassword(e.target.value)} autoComplete="current-password"
-            />
-          </div>
+          <form onSubmit={onSubmit} className="space-y-4 mt-6">
+            <div>
+              <label className="block text-sm mb-1">Username or Email</label>
+              <input
+                className="w-full rounded-xl border border-white/15 bg-black/40 px-3 py-2 outline-none focus:ring-2 focus:ring-violet-500/40"
+                value={identifier} onChange={(e) => setIdentifier(e.target.value)} autoComplete="username"
+              />
+            </div>
+            <div>
+              <label className="block text-sm mb-1">Password</label>
+              <input
+                className="w-full rounded-xl border border-white/15 bg-black/40 px-3 py-2 outline-none focus:ring-2 focus:ring-cyan-400/40"
+                type="password" value={password} onChange={(e) => setPassword(e.target.value)} autoComplete="current-password"
+              />
+            </div>
 
-          {error && <p className="text-red-400 text-sm">{error}</p>}
+            {error && <p className="text-red-400 text-sm">{error}</p>}
 
-          <button
-            className="w-full rounded-xl bg-gradient-to-r from-violet-600/40 to-cyan-500/40 px-4 py-2.5 border border-white/10 hover:from-violet-500/50 hover:to-cyan-400/50 transition disabled:opacity-50"
-            disabled={loading}
-          >
-            {loading ? 'Logging in…' : 'Login'}
-          </button>
-        </form>
+            <button
+              className="w-full rounded-xl bg-gradient-to-r from-violet-600/40 to-cyan-500/40 px-4 py-2.5 border border-white/10 hover:from-violet-500/50 hover:to-cyan-400/50 transition disabled:opacity-50"
+              disabled={loading}
+            >
+              {loading ? 'Logging in…' : 'Login'}
+            </button>
+          </form>
 
-        <p className="text-sm text-neutral-300 mt-4">
-          No account? <a className="underline" href="/register">Create one</a>
-        </p>
+          <p className="text-sm text-neutral-300 mt-4">
+            No account? <a className="underline" href="/register">Create one</a>
+          </p>
+        </div>
+      </div>
+
+      {/* RIGHT: animated cosmic panel (hidden on small screens) */}
+      <div className="hidden md:block">
+        <CosmicPanel />
       </div>
     </div>
   );

@@ -46,7 +46,6 @@ export type User = { id: number; username: string; email?: string };
 export const authApi = {
   me(): Promise<User> { return apiFetch<User>('/api/auth/me'); },
   login(identifier: string, password: string): Promise<User> {
-    // backend accepts username OR email via "username" field
     return apiFetch<User>('/api/auth/login', { method: 'POST', body: JSON.stringify({ username: identifier, password }) });
   },
   register(username: string, email: string, password: string): Promise<User> {

@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { cookies } from 'next/headers';
-import LogoutButton from './LogoutButton';
+import LogoutButton from '@/components/LogoutButton';
 
 type User = { id: number; username: string };
 
@@ -21,9 +21,14 @@ export default async function Navbar() {
   } catch {}
 
   return (
-    <header className="border-b border-neutral-800/70 supports-[backdrop-filter]:bg-neutral-950/60 backdrop-blur-md sticky top-0 z-10">
+    <header className="sticky top-0 z-10 border-b border-white/10 backdrop-blur-md bg-black/20">
       <nav className="mx-auto max-w-5xl px-4 py-3 flex items-center gap-4">
-        <Link href="/" className="font-semibold tracking-tight text-lg hover:opacity-90">Reflecta</Link>
+        <Link
+          href="/"
+          className="font-semibold tracking-tight text-lg bg-gradient-to-r from-violet-400 to-cyan-300 bg-clip-text text-transparent"
+        >
+          Reflecta
+        </Link>
         <span className="flex-1" />
         {!me ? (
           <div className="flex items-center gap-3">
@@ -32,7 +37,8 @@ export default async function Navbar() {
           </div>
         ) : (
           <div className="flex items-center gap-3">
-            <span className="text-sm text-neutral-400">Hi, <b className="text-neutral-200">{me.username}</b></span>
+            <Link href="/dashboard" className="text-sm hover:underline">Dashboard</Link>
+            <span className="text-sm text-neutral-300">Hi, <b className="text-white">{me.username}</b></span>
             <LogoutButton />
           </div>
         )}

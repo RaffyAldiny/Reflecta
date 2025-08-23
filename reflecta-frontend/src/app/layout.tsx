@@ -7,9 +7,9 @@ export const metadata = { title: 'Reflecta', description: 'Your private journal'
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      {/* gx-bg gives nebula; gx-stars adds twinkling dots */}
       <body className="min-h-dvh antialiased gx-bg">
-        <div className="gx-stars" aria-hidden="true" />
+        {/* put behind page-level backgrounds */}
+        <div className="gx-stars -z-10" aria-hidden="true" />
         {/* @ts-expect-error Async Server Component */}
         <Navbar />
         <main className="mx-auto max-w-5xl px-4 py-8">{children}</main>

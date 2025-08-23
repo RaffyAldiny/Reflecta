@@ -2,19 +2,23 @@
 
 export default function CosmicPanel() {
   return (
-    <div className="relative h-[520px] rounded-2xl border border-white/15 bg-gradient-to-br from-purple-900/30 to-cyan-900/30 overflow-hidden backdrop-blur-md">
-      {/* Subtle glows */}
-      <div className="pointer-events-none absolute -top-24 -left-24 h-72 w-72 rounded-full bg-violet-600/40 blur-3xl" />
-      <div className="pointer-events-none absolute -bottom-24 -right-24 h-72 w-72 rounded-full bg-cyan-500/30 blur-3xl" />
+    <div className="relative w-full h-[300px] md:h-[520px] rounded-xl md:rounded-2xl border border-violet-400/20 bg-gradient-to-br from-purple-900/30 to-cyan-900/30 overflow-hidden backdrop-blur-sm">
+      {/* Subtle glows - positioned for mobile and desktop */}
+      <div className="pointer-events-none absolute -top-16 -left-16 h-48 w-48 rounded-full bg-violet-600/40 blur-2xl md:blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-16 -right-16 h-48 w-48 rounded-full bg-cyan-500/30 blur-2xl md:blur-3xl" />
 
-      {/* Subtle starfield */}
-      <div className="absolute inset-0 opacity-15" style={{
-        backgroundImage: 'radial-gradient(rgba(255,255,255,0.8) 0.8px, transparent 0.8px)',
-        backgroundSize: '5px 5px'
+      {/* Responsive starfield */}
+      <div className="absolute inset-0 opacity-20 md:opacity-30" style={{
+        backgroundImage: 'radial-gradient(rgba(255,255,255,0.9) 0.8px, transparent 0.8px)',
+        backgroundSize: '4px 4px'
       }}/>
 
-      {/* SVG art layer */}
-      <svg className="absolute inset-0 w-full h-full" viewBox="0 0 800 520" preserveAspectRatio="xMidYMid slice">
+      {/* Responsive SVG art layer */}
+      <svg 
+        className="absolute inset-0 w-full h-full" 
+        viewBox="0 0 800 520" 
+        preserveAspectRatio="xMidYMid slice"
+      >
         <defs>
           <radialGradient id="g-planet" cx="50%" cy="50%" r="50%">
             <stop offset="0%" stopColor="rgba(167, 139, 250, 0.7)"/>
@@ -34,16 +38,16 @@ export default function CosmicPanel() {
           </filter>
         </defs>
 
-        {/* Planet core */}
+        {/* Responsive planet core */}
         <g className="spin-slow">
-          <circle cx="560" cy="170" r="110" fill="url(#g-planet)" />
-          {/* Ring */}
-          <ellipse cx="560" cy="170" rx="170" ry="42"
+          <circle cx="560" cy="170" r="100" fill="url(#g-planet)" className="md:r-[120px]" />
+          {/* Responsive ring */}
+          <ellipse cx="560" cy="170" rx="160" ry="40"
                    fill="none" stroke="url(#g-line)" strokeOpacity="0.4"
-                   strokeWidth="2" filter="url(#glow)"/>
+                   strokeWidth="2" filter="url(#glow)" className="md:rx-[180px] md:ry-[48px]"/>
         </g>
 
-        {/* Constellation */}
+        {/* Constellation - simplified for mobile */}
         <g filter="url(#glow)">
           {/* lines */}
           <polyline
@@ -59,18 +63,18 @@ export default function CosmicPanel() {
             [100,360],[170,300],[250,340],[320,260],[390,300],
             [430,360],[480,320],[520,350],[580,300],[650,330],
           ].map(([x,y],i)=>(
-            <circle key={i} cx={x} cy={y} r={i%3===0?2.2:1.6}
+            <circle key={i} cx={x} cy={y} r={i%3===0?1.8:1.4}
               fill="#fff" className={`blink ${i%2?'delay-2':''}`} />
           ))}
         </g>
       </svg>
 
-      {/* Caption */}
-      <div className="absolute bottom-0 left-0 right-0 p-5 text-xs text-neutral-300/70 text-center bg-gradient-to-t from-black/40 to-transparent">
+      {/* Responsive caption */}
+      <div className="absolute bottom-0 left-0 right-0 p-4 text-xs md:text-sm text-cyan-100/80 font-light text-center bg-gradient-to-t from-black/50 to-transparent">
         Your thoughts, like stars, connect into constellations ✨
       </div>
 
-      {/* Animations */}
+      {/* Responsive animations */}
       <style jsx>{`
         .spin-slow { animation: spin 35s linear infinite; transform-origin: 560px 170px; }
         .dash { animation: dash 8s ease-in-out infinite; }
@@ -90,6 +94,15 @@ export default function CosmicPanel() {
         @keyframes blink {
           0%, 100% { opacity: .5; transform: scale(1); }
           50% { opacity: .8; transform: scale(1.2); }
+        }
+        
+        /* Mobile optimizations */
+        @media (max-width: 768px) {
+          .spin-slow { 
+            animation: spin 45s linear infinite;
+            transform-origin: 70% 30%;
+          }
+          .dash { animation: dash 10s ease-in-out infinite; }
         }
       `}</style>
     </div>

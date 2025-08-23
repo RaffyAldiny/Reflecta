@@ -2,17 +2,6 @@
 
 import { useEffect, useRef } from 'react';
 
-/**
- * Enhanced full-screen cosmic background with:
- * - Dynamic 3D-like parallax effect on mouse movement
- * - More vibrant nebula with animated gradient shifts
- * - Three star layers with varying sizes and animation speeds
- * - Glowing orbit trails with improved visual design
- * - Animated badges with subtle hover effects (when pointer events enabled)
- * - Pulsing center element with dynamic glow
- * - Shooting stars for added dynamism
- * - Optimized performance with requestAnimationFrame
- */
 export default function CosmicBackground() {
   const containerRef = useRef(null);
   
@@ -27,19 +16,15 @@ export default function CosmicBackground() {
     let frameId = null;
     
     const handleMouseMove = (e) => {
-      // Normalize mouse position to -0.5 to 0.5 range
       mouseX = (e.clientX / window.innerWidth) - 0.5;
       mouseY = (e.clientY / window.innerHeight) - 0.5;
     };
     
     const animate = () => {
-      const moveX = mouseX * 20; // Max 20px movement
+      const moveX = mouseX * 20;
       const moveY = mouseY * 20;
       
-      container.style.transform = `
-        translate3d(${moveX}px, ${moveY}px, 0)
-      `;
-      
+      container.style.transform = `translate3d(${moveX}px, ${moveY}px, 0)`;
       frameId = requestAnimationFrame(animate);
     };
     
@@ -55,23 +40,31 @@ export default function CosmicBackground() {
   return (
     <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true">
       <div ref={containerRef} className="absolute inset-0 transition-transform duration-300 ease-out">
-        {/* Enhanced Nebula with multiple gradient layers */}
+        {/* Nebula Background */}
         <div className="nebula absolute inset-0" />
         
-        {/* Shooting stars */}
-        <div className="shooting-stars absolute inset-0" />
-        
-        {/* Three layers of stars for depth */}
+        {/* Stars */}
         <div className="stars stars-1 absolute inset-0" />
         <div className="stars stars-2 absolute inset-0" />
         <div className="stars stars-3 absolute inset-0" />
         
-        {/* Glowing particles */}
-        <div className="particles absolute inset-0" />
+        {/* Shooting Stars */}
+        <div className="shooting-star shooting-star-1" />
+        <div className="shooting-star shooting-star-2" />
+        <div className="shooting-star shooting-star-3" />
+        
+        {/* Asteroids */}
+        <div className="asteroid asteroid-1" />
+        <div className="asteroid asteroid-2" />
+        <div className="asteroid asteroid-3" />
+        
+        {/* Constellations */}
+        <div className="constellation constellation-1" />
+        <div className="constellation constellation-2" />
+        <div className="constellation constellation-3" />
 
-        {/* Orbit system (centered & responsive) */}
+        {/* Orbit System */}
         <div className="absolute left-1/2 top-1/2 w-[min(92vw,720px)] aspect-square -translate-x-1/2 -translate-y-1/2">
-          {/* Enhanced orbit circles with glow effect */}
           <svg viewBox="0 0 100 100" className="absolute inset-0 w-full h-full">
             <defs>
               <linearGradient id="gx-line-1" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -99,9 +92,9 @@ export default function CosmicBackground() {
             <circle cx="50" cy="50" r="42" className="orbit orbit-3" />
           </svg>
 
-          {/* Enhanced center "You" with pulsing animation */}
+          {/* Center "You" Element */}
           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 grid place-items-center">
-            <div className="center-glow absolute rounded-full bg-violet-500/20 blur-xl animate-pulse-slow" />
+            <div className="center-glow absolute rounded-full bg-violet-500/20 blur-xl" />
             <div className="h-16 w-16 sm:h-20 sm:w-20 rounded-full bg-gradient-to-br from-violet-600/30 to-fuchsia-600/30 border border-white/20 backdrop-blur-xl shadow-[0_0_60px_0_rgba(139,92,246,0.5)] relative overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-transparent" />
               <div className="h-full w-full grid place-items-center text-xs sm:text-sm font-medium tracking-wider text-white">
@@ -110,7 +103,7 @@ export default function CosmicBackground() {
             </div>
           </div>
 
-          {/* orbiting badges with enhanced styling */}
+          {/* Orbiting Badges */}
           <Orbit radius="calc(50% - 42px)" dur="28s">
             <Badge label="Photos" />
           </Orbit>
@@ -120,15 +113,19 @@ export default function CosmicBackground() {
           <Orbit radius="calc(50% - 18px)" dur="18s">
             <Badge label="Moods" />
           </Orbit>
+          <Orbit radius="calc(50% - 48px)" dur="32s" reverse>
+            <Badge label="Friends" />
+          </Orbit>
+          <Orbit radius="calc(50% - 36px)" dur="26s">
+            <Badge label="Memories" />
+          </Orbit>
         </div>
       </div>
 
-      {/* component-scoped styling */}
       <style jsx>{`
-        /* Enhanced Nebula with more vibrant colors and movement */
         .nebula {
           background:
-            radial-gradient(60% 45% at 15% 0%,  rgba(139, 92, 246, 0.4) 0%, transparent 70%),
+            radial-gradient(60% 45% at 15% 0%, rgba(139, 92, 246, 0.4) 0%, transparent 70%),
             radial-gradient(45% 35% at 85% 10%, rgba(236, 72, 153, 0.35) 0%, transparent 70%),
             radial-gradient(60% 55% at 50% 85%, rgba(59, 130, 246, 0.3) 0%, transparent 70%),
             radial-gradient(40% 40% at 70% 30%, rgba(6, 182, 212, 0.4) 0%, transparent 100%),
@@ -145,41 +142,8 @@ export default function CosmicBackground() {
           100% { background-position: 100% 100%; } 
         }
 
-        /* Shooting stars */
-        .shooting-stars:before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: -100px;
-          width: 100px;
-          height: 2px;
-          background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.8));
-          animation: shooting 12s linear infinite;
-        }
-        
-        .shooting-stars:after {
-          content: '';
-          position: absolute;
-          top: 30%;
-          right: -100px;
-          width: 80px;
-          height: 1px;
-          background: linear-gradient(to left, transparent, rgba(255, 255, 255, 0.6));
-          animation: shooting 15s linear infinite;
-          animation-delay: 5s;
-        }
-        
-        @keyframes shooting {
-          0% { transform: translateX(0) rotate(45deg); opacity: 0; }
-          10% { opacity: 1; }
-          20% { transform: translateX(100vw) rotate(45deg); opacity: 0; }
-          100% { opacity: 0; }
-        }
-
-        /* Enhanced stars with different sizes and animations */
         .stars {
-          background-image: 
-            radial-gradient(circle, rgba(255,255,255,0.9) 1px, transparent 1px);
+          background-image: radial-gradient(circle, rgba(255,255,255,0.9) 1px, transparent 1px);
           mix-blend-mode: screen;
         }
         .stars-1 { 
@@ -211,21 +175,137 @@ export default function CosmicBackground() {
           100% { transform: translate(-150px, -80px); } 
         }
 
-        /* Particles */
-        .particles:before {
-          content: '';
+        .shooting-star {
           position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background-image: 
-            radial-gradient(circle at 20% 30%, rgba(236, 72, 153, 0.3) 0px, transparent 2px),
-            radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.3) 0px, transparent 2px),
-            radial-gradient(circle at 40% 70%, rgba(6, 182, 212, 0.3) 0px, transparent 2px),
-            radial-gradient(circle at 60% 80%, rgba(59, 130, 246, 0.3) 0px, transparent 2px);
-          background-size: 100% 100%;
+          height: 2px;
+          background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.8));
+          animation: shooting 12s linear infinite;
+          opacity: 0;
+        }
+        
+        .shooting-star-1 {
+          top: 15%;
+          left: -100px;
+          width: 80px;
+          animation-delay: 0s;
+        }
+        
+        .shooting-star-2 {
+          top: 65%;
+          right: -100px;
+          width: 100px;
+          animation-delay: 7s;
+          transform: rotate(-45deg);
+        }
+        
+        .shooting-star-3 {
+          top: 40%;
+          left: -80px;
+          width: 70px;
+          animation-delay: 15s;
+          transform: rotate(30deg);
+        }
+        
+        @keyframes shooting {
+          0% { transform: translateX(0) rotate(45deg); opacity: 0; }
+          5% { opacity: 1; }
+          15% { transform: translateX(100vw) rotate(45deg); opacity: 0; }
+          100% { opacity: 0; }
+        }
+
+        .asteroid {
+          position: absolute;
+          border-radius: 50%;
+          background: radial-gradient(circle at 30% 30%, #aaa, #444 70%);
+          box-shadow: 0 0 15px rgba(255, 255, 200, 0.4);
+          animation: float 60s linear infinite;
+          opacity: 0.6;
+        }
+        
+        .asteroid-1 {
+          width: 8px;
+          height: 6px;
+          top: 20%;
+          left: 10%;
+          animation-duration: 45s;
+          animation-delay: 0s;
+        }
+        
+        .asteroid-2 {
+          width: 12px;
+          height: 10px;
+          top: 70%;
+          left: 80%;
+          animation-duration: 60s;
+          animation-delay: 20s;
+        }
+        
+        .asteroid-3 {
+          width: 6px;
+          height: 4px;
+          top: 40%;
+          left: 5%;
+          animation-duration: 50s;
+          animation-delay: 35s;
+        }
+        
+        @keyframes float {
+          0% { transform: translate(0, 0) rotate(0deg); }
+          25% { transform: translate(40vw, 20vh) rotate(90deg); }
+          50% { transform: translate(80vw, 40vh) rotate(180deg); }
+          75% { transform: translate(20vw, 60vh) rotate(270deg); }
+          100% { transform: translate(0, 0) rotate(360deg); }
+        }
+
+        .constellation {
+          position: absolute;
+          opacity: 0.3;
           animation: twinkle 8s ease-in-out infinite;
+        }
+        
+        .constellation-1 {
+          top: 15%;
+          left: 20%;
+          width: 100px;
+          height: 60px;
+          background-image: 
+            radial-gradient(circle, rgba(255,255,255,0.9) 2px, transparent 2px),
+            radial-gradient(circle, rgba(255,255,255,0.9) 2px, transparent 2px),
+            radial-gradient(circle, rgba(255,255,255,0.9) 2px, transparent 2px),
+            radial-gradient(circle, rgba(255,255,255,0.9) 2px, transparent 2px);
+          background-position: 0 0, 30px 40px, 60px 10px, 90px 30px;
+          background-size: 100px 60px;
+          animation-delay: 0s;
+        }
+        
+        .constellation-2 {
+          top: 70%;
+          right: 15%;
+          width: 120px;
+          height: 80px;
+          background-image: 
+            radial-gradient(circle, rgba(255,255,255,0.9) 2px, transparent 2px),
+            radial-gradient(circle, rgba(255,255,255,0.9) 2px, transparent 2px),
+            radial-gradient(circle, rgba(255,255,255,0.9) 2px, transparent 2px),
+            radial-gradient(circle, rgba(255,255,255,0.9) 2px, transparent 2px),
+            radial-gradient(circle, rgba(255,255,255,0.9) 2px, transparent 2px);
+          background-position: 0 0, 40px 60px, 80px 20px, 100px 50px, 60px 70px;
+          background-size: 120px 80px;
+          animation-delay: 2s;
+        }
+        
+        .constellation-3 {
+          top: 40%;
+          left: 70%;
+          width: 80px;
+          height: 80px;
+          background-image: 
+            radial-gradient(circle, rgba(255,255,255,0.9) 2px, transparent 2px),
+            radial-gradient(circle, rgba(255,255,255,0.9) 2px, transparent 2px),
+            radial-gradient(circle, rgba(255,255,255,0.9) 2px, transparent 2px);
+          background-position: 0 40px, 40px 0, 80px 60px;
+          background-size: 80px 80px;
+          animation-delay: 4s;
         }
         
         @keyframes twinkle {
@@ -233,7 +313,6 @@ export default function CosmicBackground() {
           50% { opacity: 0.7; }
         }
 
-        /* Enhanced orbits */
         .orbit {
           fill: none;
           stroke-width: 0.8;
@@ -241,35 +320,18 @@ export default function CosmicBackground() {
           opacity: 0.7;
           filter: url(#glow);
         }
-        .orbit-1 {
-          stroke: url(#gx-line-1);
-        }
-        .orbit-2 {
-          stroke: url(#gx-line-2);
-        }
-        .orbit-3 {
-          stroke: url(#gx-line-3);
-        }
+        .orbit-1 { stroke: url(#gx-line-1); }
+        .orbit-2 { stroke: url(#gx-line-2); }
+        .orbit-3 { stroke: url(#gx-line-3); }
 
-        /* Pulsing animation for center element */
-        @keyframes pulse-slow {
-          0%, 100% { opacity: 0.5; transform: scale(1.1); }
-          50% { opacity: 0.8; transform: scale(1.3); }
-        }
-        
-        .animate-pulse-slow {
-          animation: pulse-slow 6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-        }
-
-        /* Respect reduced motion */
         @media (prefers-reduced-motion: reduce) {
           .nebula, 
           .stars-1, 
           .stars-2, 
           .stars-3, 
-          .shooting-stars:before,
-          .shooting-stars:after,
-          .particles:before,
+          .shooting-star,
+          .asteroid,
+          .constellation,
           .center-glow,
           [style*="animation"] { 
             animation: none !important; 
@@ -283,8 +345,6 @@ export default function CosmicBackground() {
     </div>
   );
 }
-
-/* ---------- Enhanced helpers ---------- */
 
 function Orbit({
   radius,
@@ -304,7 +364,7 @@ function Orbit({
         transformOrigin: 'center',
       }}
     >
-      <div className="absolute left-1/2 top-0 -translate-x-1/2 orbit-badge-container">
+      <div className="absolute left-1/2 top-0 -translate-x-1/2">
         {children}
       </div>
 
@@ -318,14 +378,6 @@ function Orbit({
           to { transform: rotate(-360deg); } 
         }
         
-        .orbit-badge-container {
-          transition: transform 0.3s ease;
-        }
-        
-        .orbit-badge-container:hover {
-          transform: translateX(-50%) scale(1.1);
-        }
-        
         @media (prefers-reduced-motion: reduce) {
           div[style*="animation"] { 
             animation: none !important; 
@@ -337,56 +389,17 @@ function Orbit({
 }
 
 function Badge({ label }: { label: string }) {
-  const gradient =
-    label === 'Photos'
-      ? 'from-violet-600/40 to-fuchsia-500/40'
-      : label === 'Music'
-      ? 'from-cyan-500/40 to-blue-500/40'
-      : 'from-indigo-500/40 to-purple-500/40';
+  const gradients = {
+    Photos: 'from-violet-600/40 to-fuchsia-500/40',
+    Music: 'from-cyan-500/40 to-blue-500/40',
+    Moods: 'from-indigo-500/40 to-purple-500/40',
+    Friends: 'from-emerald-500/40 to-teal-500/40',
+    Memories: 'from-rose-500/40 to-pink-500/40'
+  };
 
   return (
-    <div className={`relative orbit-badge ${label.toLowerCase()}`}>
-      <div className={`px-3.5 py-2 rounded-full text-xs sm:text-sm font-medium border border-white/20 bg-gradient-to-r ${gradient} backdrop-blur-lg shadow-lg transition-all duration-300 hover:scale-110 hover:shadow-xl`}>
-        {label}
-      </div>
-      <style jsx>{`
-        .orbit-badge:before {
-          content: '';
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          width: 110%;
-          height: 110%;
-          border-radius: 50%;
-          transform: translate(-50%, -50%) scale(0.9);
-          opacity: 0;
-          transition: opacity 0.3s ease, transform 0.3s ease;
-          z-index: -1;
-        }
-        
-        .photos:before {
-          background: radial-gradient(circle, rgba(139, 92, 246, 0.3) 0%, transparent 70%);
-        }
-        
-        .music:before {
-          background: radial-gradient(circle, rgba(6, 182, 212, 0.3) 0%, transparent 70%);
-        }
-        
-        .moods:before {
-          background: radial-gradient(circle, rgba(79, 70, 229, 0.3) 0%, transparent 70%);
-        }
-        
-        .orbit-badge:hover:before {
-          opacity: 1;
-          transform: translate(-50%, -50%) scale(1.1);
-        }
-        
-        @media (prefers-reduced-motion: reduce) {
-          .orbit-badge, .orbit-badge:before {
-            transition: none;
-          }
-        }
-      `}</style>
+    <div className={`px-3.5 py-2 rounded-full text-xs sm:text-sm font-medium border border-white/20 bg-gradient-to-r ${gradients[label]} backdrop-blur-lg shadow-lg`}>
+      {label}
     </div>
   );
 }

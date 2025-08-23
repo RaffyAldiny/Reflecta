@@ -28,48 +28,60 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="grid md:grid-cols-2 gap-6 items-stretch">
+    <div className="min-h-screen md:min-h-0 md:grid md:grid-cols-2 gap-6 items-center p-4 md:p-0">
       {/* LEFT: form card */}
-      <div className="max-w-md">
-        <div className="relative overflow-hidden rounded-2xl border border-white/10 p-6 bg-black/30 backdrop-blur">
-          <div className="pointer-events-none absolute -top-20 -left-16 h-48 w-48 rounded-full bg-violet-600/30 blur-3xl" />
-          <h1 className="text-2xl font-semibold tracking-tight">Welcome back</h1>
-          <p className="text-neutral-300 text-sm mt-1">Log in to continue your journey through memories.</p>
+      <div className="w-full max-w-md mx-auto">
+        <div className="relative overflow-hidden rounded-2xl border-2 border-violet-500/30 p-6 bg-gradient-to-br from-purple-900/40 to-cyan-900/40 backdrop-blur-lg">
+          <div className="pointer-events-none absolute -top-20 -left-16 h-48 w-48 rounded-full bg-violet-600/50 blur-3xl" />
+          <div className="pointer-events-none absolute -bottom-20 -right-16 h-48 w-48 rounded-full bg-cyan-600/40 blur-3xl" />
+          
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-violet-200 to-cyan-200 bg-clip-text text-transparent">
+            Welcome back
+          </h1>
+          <p className="text-neutral-200 text-sm mt-2">Log in to continue your journey through memories.</p>
 
-          <form onSubmit={onSubmit} className="space-y-4 mt-6">
+          <form onSubmit={onSubmit} className="space-y-5 mt-8">
             <div>
-              <label className="block text-sm mb-1">Username or Email</label>
+              <label className="block text-sm mb-2 text-neutral-200">Username or Email</label>
               <input
-                className="w-full rounded-xl border border-white/15 bg-black/40 px-3 py-2 outline-none focus:ring-2 focus:ring-violet-500/40"
-                value={identifier} onChange={(e) => setIdentifier(e.target.value)} autoComplete="username"
+                className="w-full rounded-xl border-2 border-violet-500/20 bg-black/40 px-4 py-3 outline-none focus:border-violet-500/40 transition-colors text-white"
+                value={identifier} 
+                onChange={(e) => setIdentifier(e.target.value)} 
+                autoComplete="username"
               />
             </div>
             <div>
-              <label className="block text-sm mb-1">Password</label>
+              <label className="block text-sm mb-2 text-neutral-200">Password</label>
               <input
-                className="w-full rounded-xl border border-white/15 bg-black/40 px-3 py-2 outline-none focus:ring-2 focus:ring-cyan-400/40"
-                type="password" value={password} onChange={(e) => setPassword(e.target.value)} autoComplete="current-password"
+                className="w-full rounded-xl border-2 border-cyan-500/20 bg-black/40 px-4 py-3 outline-none focus:border-cyan-500/40 transition-colors text-white"
+                type="password" 
+                value={password} 
+                onChange={(e) => setPassword(e.target.value)} 
+                autoComplete="current-password"
               />
             </div>
 
-            {error && <p className="text-red-400 text-sm">{error}</p>}
+            {error && <p className="text-red-300 text-sm bg-red-500/20 p-2 rounded-lg">{error}</p>}
 
             <button
-              className="w-full rounded-xl bg-gradient-to-r from-violet-600/40 to-cyan-500/40 px-4 py-2.5 border border-white/10 hover:from-violet-500/50 hover:to-cyan-400/50 transition disabled:opacity-50"
+              className="w-full rounded-xl bg-gradient-to-r from-violet-600 to-cyan-500 px-4 py-3.5 border-2 border-white/20 hover:from-violet-500 hover:to-cyan-400 transition-all duration-300 disabled:opacity-50 font-semibold text-white shadow-lg hover:shadow-violet-500/30"
               disabled={loading}
             >
               {loading ? 'Logging in…' : 'Login'}
             </button>
           </form>
 
-          <p className="text-sm text-neutral-300 mt-4">
-            No account? <a className="underline" href="/register">Create one</a>
+          <p className="text-sm text-neutral-200 mt-6 text-center">
+            No account?{' '}
+            <a className="text-cyan-300 hover:text-cyan-200 underline transition-colors" href="/register">
+              Create one
+            </a>
           </p>
         </div>
       </div>
 
       {/* RIGHT: animated cosmic panel (hidden on small screens) */}
-      <div className="hidden md:block">
+      <div className="hidden md:block mt-8 md:mt-0">
         <CosmicPanel />
       </div>
     </div>

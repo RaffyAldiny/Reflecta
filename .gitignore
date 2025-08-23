@@ -1,0 +1,52 @@
+# --- OS / Editor ---
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.vscode/
+.idea/
+
+# --- Python / Django (backend) ---
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+.env
+*.env
+.env.*            # never commit secrets
+venv/
+ENV/
+env/
+.eggs/
+*.egg-info/
+dist/
+build/
+.coverage
+htmlcov/
+.mypy_cache/
+pytest_cache/
+# Django collectstatic output (if you run it locally)
+staticfiles/
+# uploads (your dev media)
+media/
+
+# --- Node / Next.js (frontend) ---
+node_modules/
+.npm/
+.next/
+out/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.env.local
+.env.*.local
+# Turbopack cache
+.turbo/
+
+# --- Misc ---
+*.bak
+*.tmp
+*.orig

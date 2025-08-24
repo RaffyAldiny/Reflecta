@@ -1,3 +1,5 @@
+# filepath: /.gitignore
+
 # --- OS / Editor ---
 .DS_Store
 Thumbs.db
@@ -15,9 +17,15 @@ __pycache__/
 .env
 *.env
 .env.*            # never commit secrets
+
+# virtual environments (ANY name / location)
+.venv/
 venv/
 ENV/
 env/
+reflecta-backend/.venv/
+reflecta-backend/venv/
+
 .eggs/
 *.egg-info/
 dist/
@@ -26,10 +34,13 @@ build/
 htmlcov/
 .mypy_cache/
 pytest_cache/
+
 # Django collectstatic output (if you run it locally)
 staticfiles/
+
 # uploads (your dev media)
 media/
+reflecta-backend/media/
 
 # --- Node / Next.js (frontend) ---
 node_modules/
@@ -43,6 +54,7 @@ yarn-error.log*
 pnpm-debug.log*
 .env.local
 .env.*.local
+
 # Turbopack cache
 .turbo/
 
